@@ -14,3 +14,14 @@ VALUES
   , ('U002', '2016-08-26', 2)
   , ('U003', '2016-08-27', 3)
 ;
+
+SELECT
+  user_id
+  , CASE -- CASE 식 중요
+    WHEN register_device = 1 THEN 'desktop' -- 끝에 콤마 없이
+    WHEN register_device = 2 THEN 'smartphone'
+    WHEN register_device = 3 THEN 'application'
+    -- 디폴트값 지정 위해선 ELSE
+  END AS device_name
+FROM mst_users
+;
