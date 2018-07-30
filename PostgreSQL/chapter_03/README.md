@@ -29,4 +29,14 @@
     - *CASE* 구문으로 전분기와의 증감 형태가 어떤지 알 수 있다.
     - 규봉: CASE 구문 내 WHEN들과 ELSE 간 콤마 없음
     - *SIGN* fn은 부호 (+1, 0, -1)
-    - 
+    - MIN / MAX의 역할을 least / greatest
+    - **규봉: R이나 Python처럼 최대인 행 혹은 분기를 불러오려면?**
+    - [**규봉: 열별로 특정 칼럼들의 조합으로 비율 혹은 평균 만들기**](https://stackoverflow.com/questions/7367750/average-of-multiple-columns)
+    - SELECT <br/>
+    year<br/>
+    , AVG(q1 + q2 + q3) AS average<br/>
+    FROM<br/>
+    quarterly_sales<br/>
+    ;<br/>
+    동작 안하는 전형적인 모습!
+    
