@@ -51,6 +51,27 @@ FROM
   mst_users_with_birthday
 ;
 
+-- 직접 계산법
 SELECT
   floor((20180731 - 19900202) / 10000) AS age
+;
+
+-- 등록시점과 현재 나이를 문자열 변환을 통해 계산하는 쿼리
+SELECT
+  user_id
+  , register_stamp::date AS register_date
+  , substring(register_stamp, 1, 10) AS register_date2
+  , birth_date
+  , floor(
+      (CAST(replace(substring(register_stamp, 1, 10), '-', '') AS integer)
+        - CAST(replace(birth_date, '-', '') AS integer)
+      ) / 10000
+    ) AS register_age
+  , floor(
+      (CAST(replace(CAST(CURRENT_DATE as text), '-', '') AS integer)
+        - CAST(replace(birth_date, '-', '') AS integer)
+      ) / 10000
+    ) AS current_age
+FROM
+  mst_users_with_birthday
 ;
