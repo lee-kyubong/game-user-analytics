@@ -39,4 +39,43 @@
             quarterly_sales<br/>
             ; --\#동작 안하는 전형적인 모습!
 6. 3. 2개의 값 비율 개산하기 (6-3)
-- CTR(Click Through Rate): '클릭 / 노출 수' 비율
+    - CTR(Click Through Rate): '클릭 / 노출 수' 비율
+    - HIVE, SparkSQL: 정수로 나눌 때 자동적으로 실수 변환
+    - PostgreSQL: *CAST( - AS double precision)* 변환 필요
+    - 클릭 수 혹은 노출 수가 0인 경우에 대비해, 0으로 나누는 것을 피할 필요가 있다.<br/>
+    *CASE* 이용해 ERROR:  division by zero 대비 or *NULLIF(노출수, 0)* 이용
+6. 4. 두 값의 거리 계산하기 (6-4))
+    - 절대값, 제곱평균 제곱근(RMS) 계산 시, *abs, power( -, 2), sqrt* 활용
+    - 유클리드 거리 계산도 같은 활용함수를 갖는다. *sqrt(power(x1 - x2, 2) + power(y1 - y2, 2))*
+6. 5. 날짜 / 시간 계산하기 (6-5)
+    - 유져의 나이 계산, 가입 기간, 연령대 분포 파악 등: 두 날짜 데이터의 차이, 시간 데이터 기준 n 시간 후 산출
+    - ex) *register_stamp::timestamp - '30 minutes'::interval AS minus_30_min<br/>
+    (register_stamp::date - '1 mon'::interval)::date AS minus_1_month*
+    - ::timestamp는 초 단위까지의 시각 / ::date는 년-월-일까지
+    - 가입일과 오늘 날짜의 차이 계산으로 이용일수 계산
+    > SELECT
+    user_id
+    , CURRENT_DATE AS today
+    , register_stamp::date AS register_date
+    , register_stamp::timestamp AS regi_timestamp
+    , today - register_date AS diff_days
+    FROM
+    mst_users_with_birthday
+    ;
+    - >Hive, SparkSQL의 경우 날짜/시각을 계산하기 위한 기본 함수가 제공되지 않으므로<br/>
+    unixtime으로 변환 후 초 단위로 계산을 한 뒤 다시 타임스탬프로 변환한다.
+    ex) CAST(register_stamp AS timestamp) AS timestamp) AS register_stamp<br/>
+    , from_unixtime(unix_timestamp(register_stamp) + (60 * 60)) AS plus_1_hour <br/>
+    -- 문자열을 날짜로 변환할 때는 to_date 함수 활용(규봉: as.date() in R) <br/>
+    , to_date(register_stamp) AS register_date <br/>
+    -- 일과 월을 계산할 때는 date_add or add_months fn 활용 <br/>
+    , add_months(to_date(register_stamp), -1) AS minus_1_month <br/>
+    -- 날짜 간 차이 계산은 date_diff()<br/>
+    
+    
+    
+    
+    
+    
+    
+    
