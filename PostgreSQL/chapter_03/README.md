@@ -37,6 +37,6 @@
             , AVG(q1 + q2 + q3) AS average<br/>
         FROM<br/>
             quarterly_sales<br/>
-        ;<br/>
-    동작 안하는 전형적인 모습!
-    - 
+            ; --\#동작 안하는 전형적인 모습!
+6. 3. 2개의 값 비율 개산하기 (6-3)
+- CTR(Click Through Rate): '클릭 / 노출 수' 비율
