@@ -73,8 +73,8 @@
     -- 일과 월을 계산할 때는 date_add or add_months fn 활용 <br/>
     , add_months(to_date(register_stamp), -1) AS minus_1_month <br/>
     -- 날짜 간 차이 계산은 date_diff()<br/>
-    - CAST( - AS text(or integer...) / substring( - , 1, 10) / replace( - , '-', '')
-    - HIVE, SparkSQL: replace를 regexp_replace, text를 string으로.
+    - CAST( - AS text(or integer...) / substring( - , 1, 10) / replace( - , '-', '') <br/>
+    HIVE, SparkSQL: replace를 regexp_replace, text를 string으로.
     
     
     
