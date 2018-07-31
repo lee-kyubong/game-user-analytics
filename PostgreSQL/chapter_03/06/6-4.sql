@@ -27,3 +27,19 @@ VALUES
   , (3, 5, 1, 2)
   , (5, 3, 2, 1)
 ;
+
+
+-- 절대값, RMS 계산하기
+SELECT
+  abs(x1 - x2) AS abs_value
+  , sqrt(power(x1 - x2, 2)) AS rms
+FROM
+  location_1d
+;
+
+-- 2차원의 유클리드 거리 계산
+SELECT
+  sqrt(power(x1 - x2, 2) + power(y1 - y2, 2)) AS dist
+FROM
+  location_2d
+;
