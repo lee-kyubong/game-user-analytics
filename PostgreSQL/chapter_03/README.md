@@ -61,9 +61,11 @@
     , today - register_date AS diff_days<br/>
     FROM<br/>
     mst_users_with_birthday<br/>
-    ;
+    ; --\#동작 안하는 전형적인 모습! SELECT 절에서 생성한 것을 또 다른 SELECT 절 생성에 이용할 수 없다.
+    - PostgreSQL에는 날짜 계산 전용함수 *age*가 있다. interval 자료형의 날짜 단위를 return.
+    - 직접 계산 시 *SELECT floor((20180731 - 19900202) / 10000) AS age;
     - >Hive, SparkSQL의 경우 날짜/시각을 계산하기 위한 기본 함수가 제공되지 않으므로<br/>
-    unixtime으로 변환 후 초 단위로 계산을 한 뒤 다시 타임스탬프로 변환한다.
+    unixtime으로 변환 후 초 단위로 계산을 한 뒤 다시 타임스탬프로 변환한다.<br/>
     ex) CAST(register_stamp AS timestamp) AS timestamp) AS register_stamp<br/>
     , from_unixtime(unix_timestamp(register_stamp) + (60 * 60)) AS plus_1_hour <br/>
     -- 문자열을 날짜로 변환할 때는 to_date 함수 활용(규봉: as.date() in R) <br/>
