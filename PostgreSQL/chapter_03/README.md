@@ -32,7 +32,7 @@
     - MIN / MAX의 역할을 least / greatest
     - **규봉: R이나 Python처럼 최대인 행 혹은 분기를 불러오려면?**
     - [**규봉: 열별로 특정 칼럼들의 조합으로 비율 혹은 평균 만들기**](https://stackoverflow.com/questions/7367750/average-of-multiple-columns)
-    - >SELECT <br/>
+    >SELECT <br/>
             year<br/>
             , AVG(q1 + q2 + q3) AS average<br/>
         FROM<br/>
@@ -53,14 +53,14 @@
     (register_stamp::date - '1 mon'::interval)::date AS minus_1_month*
     - ::timestamp는 초 단위까지의 시각 / ::date는 년-월-일까지
     - 가입일과 오늘 날짜의 차이 계산으로 이용일수 계산
-    > SELECT
-    user_id
-    , CURRENT_DATE AS today
-    , register_stamp::date AS register_date
-    , register_stamp::timestamp AS regi_timestamp
-    , today - register_date AS diff_days
-    FROM
-    mst_users_with_birthday
+    > SELECT<br/>
+    user_id<br/>
+    , CURRENT_DATE AS today<br/>
+    , register_stamp::date AS register_date<br/>
+    , register_stamp::timestamp AS regi_timestamp<br/>
+    , today - register_date AS diff_days<br/>
+    FROM<br/>
+    mst_users_with_birthday<br/>
     ;
     - >Hive, SparkSQL의 경우 날짜/시각을 계산하기 위한 기본 함수가 제공되지 않으므로<br/>
     unixtime으로 변환 후 초 단위로 계산을 한 뒤 다시 타임스탬프로 변환한다.
