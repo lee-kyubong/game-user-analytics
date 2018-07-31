@@ -11,3 +11,10 @@ VALUES
   , ('U002', '경기도수원시', '장안구'  )
   , ('U003', '제주특별자치도', '서귀포시')
 ;
+
+SELECT
+  user_id
+  , CONCAT(pref_name, ' ', city_name) --띄어쓰기를 ' '로 삽입
+FROM
+  mst_user_location
+;
