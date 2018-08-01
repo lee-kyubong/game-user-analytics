@@ -105,29 +105,42 @@
     - 각 카테고리 상위 n개 추출: SQL 사양으로 인해 윈도 함수를 where 구문 안에 작성할 수 없으므로, <br/>
     SELECT 구문에서 윈도 함수를 사용한 결과를 서브쿼리로 만들고 외부에서 where 구문 적용해야.
     > SELECT<br/>
-    category<br/>
-    , product_id<br/>
-    , score<br/>
-    , ROW_NUMBER()<br/>
-    OVER(PARTITION BY category ORDER BY score DESC) AS rank<br/>
+        category<br/>
+        , product_id<br/>
+        , score<br/>
+        , ROW_NUMBER()<br/>
+            OVER(PARTITION BY category ORDER BY score DESC) AS rank<br/>
     FROM<br/>
-    popular_products<br/>
+        popular_products<br/>
     WHERE<br/>
-    rank < 4<br/>
-    ; -- ERROR:  column "rank" does not exist<br/>
+        rank < 4<br/>
+    ; -- ERROR:  column "rank" does not exist<br/><br/>
     >SELECT *<br/>
+        FROM<br/>
+            (SELECT<br/>
+                category<br/>
+                , product_id<br/>
+                , score<br/>
+                , ROW_NUMBER()<br/>
+                    OVER(PARTITION BY category ORDER BY score DESC) AS rank<br/>
     FROM<br/>
-    (SELECT<br/>
-    category<br/>
-    , product_id<br/>
-    , score<br/>
-    , ROW_NUMBER()<br/>
-    OVER(PARTITION BY category ORDER BY score DESC) AS rank<br/>
-    FROM<br/>
-    popular_products) AS p_p_with_rank<br/>
+        popular_products) AS p_p_with_rank<br/>
     WHERE<br/>
-    rank < 4<br/>
+        rank < 4<br/>
     ; -- 외부 쿼리에서 순위 활용해 압축하기<br/>
+7. 3. 세로 기반 데이터를 가로 기반으로 변환하기
+    - *CASE WHEN sth_1 = 'sth_2' THEN sth3 END*
+    - > 항상 주의해야할 **AGGREGATION!!**<br/>
+    SELECT<br/>
+        dt<br/>
+        , MAX(CASE WHEN indicator = 'impressions' THEN val END) AS imp<br/>
+        , MAX(CASE WHEN indicator = 'sessions' THEN val END) AS sess<br/>
+        , MAX(CASE WHEN indicator = 'users' THEN val END) AS users<br/>
+    FROM<br/>
+        daily_kpi <br/>
+    ; -- ERROR:  column "daily_kpi.dt" must appear in the GROUP BY clause or be used in an aggregate function
+    - 행을 열로 바꿀 때, 열의 종류와 수가 가변적이라면?(ex_한 고객이 한 구매당 하나의 상품이 아닌 여러 개의 상품 구매 가능)<br/>
+    *string_agg(product_id, ',') AS product_id*
     
     
     
