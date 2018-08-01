@@ -1,4 +1,3 @@
-## 072918
 ### 하나의 값 조작하기
 5. 1. 코드값을 레이블로 변경하기 (5-1)
     - CASE문이 중요.
@@ -53,7 +52,7 @@
     (register_stamp::date - '1 mon'::interval)::date AS minus_1_month*
     - ::timestamp는 초 단위까지의 시각 / ::date는 년-월-일까지
     - 가입일과 오늘 날짜의 차이 계산으로 이용일수 계산
-    > SELECT<br/>
+    - > SELECT<br/>
     user_id<br/>
     , CURRENT_DATE AS today<br/>
     , register_stamp::date AS register_date<br/>
@@ -79,8 +78,18 @@
     - PostgreSQL에는 IP 주소를 다루기 위한 'inet' 자료형 구현<br/>
     address/y 형식의 네트워크 범위에 IP 주소가 포함되는지 << or >>로 판정 가능
     - 혹은 IP주소를 *CAST*를 통해 text로 변환 후, *split_part*를 통해 원하는 부분을 골라낸다.
-    - 
+    - HIVE, SparkSQL: CAST(split(ip, '\\,')[0] AS int
+    - *lpad*는 조건에 따라 빈 공간을 0으로 채우는 fn (ex_ lpad(split_part(ip, '.', 4), 3, '0'))
     
+### 하나의 테이블에 대한 조작
+- 수많은 수집 데이터를 집약하고 가공하는 방법
+7. 1. 그룹의 특징 찾기 (7-1)
+    - *COUNT(DISTINCT user_id)* 활용 시 중복제거
+    - 그룹핑*GROUP BY*. 규봉: column에 그룹핑 대상을 추가해주면 보기 편하다.
+    - 윈도우 함수를 통해 집약함수 결과와 원래 값을 쉽게 비교할 수 있다.
+    (한명의 유져들로 구성된 row마다. 즉, AVG(score) 단독일 때 필요한 aggregation 불필요)
+    *OVER()*: 전체 / *OVER(PARTITION BY user_id)* 
+7. 2. 그룹 내부의 순서 (7-2)
     
     
     
