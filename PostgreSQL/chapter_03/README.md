@@ -13,7 +13,7 @@
 5. 4. 날짜와 타임스탬프 다루기 (5-2)
     - *CURRENT_DATE, CURRENT_TIMESTAMP* (HIVE, SparkSQL은 () 추가)
     - 임의로 지정한 날짜와 시각으로 '날짜 자료형'과 '타임스탬프 자료형' 만들 때는 CAST
-    - **규봉: (SELECT CAST('2018-07-03 13:21:33' AS timestamp) AS stamp) AS t  여기서 왜 임의의 AS로 한번 더 묶을까?**
+    - [**규봉: (SELECT CAST('2018-07-03 13:21:33' AS timestamp) AS stamp) AS t  여기서 왜 임의의 AS로 한번 더 묶을까?**](https://stackoverflow.com/questions/14767209/subquery-in-from-must-have-an-alias)"<br/> syntax 특성이다. 붙여라.
     - 가장 기초 *substring: substring(stamp, 1, 4)* # text 형태의 stamp col에서 첫번째 문자열부터 네번째 문자열까지 추출
     - *EXTRACT*는 자료형이 date일 때 YEAR, MONTH 등 함수 바로 적용 가능
 5. 5. 결측치를 디폴트 값으로 대치 (5-5)
@@ -87,14 +87,17 @@
 7. 1. 그룹의 특징 찾기 (7-1)
     - *COUNT(DISTINCT user_id)* 활용 시 중복제거
     - 그룹핑*GROUP BY*. 규봉: column에 그룹핑 대상을 추가해주면 보기 편하다.
-    - 윈도우 함수를 통해 집약함수 결과와 원래 값을 쉽게 비교할 수 있다.
-    (한명의 유져들로 구성된 row마다. 즉, AVG(score) 단독일 때 필요한 aggregation 불필요)
-    *OVER()*: 전체 / *OVER(PARTITION BY user_id)* 
+    - 윈도우 함수를 통해 집약함수 결과와 원래 값을 쉽게 비교할 수 있다.<br/>
+    (한명의 유져들로 구성된 row마다. 즉, AVG(score) 단독일 때 필요한 aggregation 불필요)<br/>
+    *OVER()*: 전체 / *OVER(PARTITION BY user_id)*
 7. 2. 그룹 내부의 순서 (7-2)
     - 상품 평점 뿐만 아니라, 특정 국가 내 지출액 or 접속시간이 가장 긴 유져들을 내림차순 정렬할 때 활용 가능<br/>
     *(ROW_NUMBER() OVER(ORDER BY score DESC) AS row*<br/>
+    - *DENSE_RANK*는 *ROW_NUMBER*와 다르게 동일 값에 대해 중복 등수를 부여<br/>
+    > ERROR:  window function row_number requires an OVER clause
     - *LAG*나 *LEAD*는 현재 행을 기준으로 앞 또는 뒤의 n순위 값을 추출하는 fn<br/>
     *(LAG(product_id, 2) OVER(ORDER BY score DESC) AS lag_2)*
+    - *FIRST_VALUE(), LAST_VALUE()*: *OVER(ORDER BY -)*로 정의된 목록 중 첫번째 혹은 마지막 해당 value 도출
     - 
     
     
