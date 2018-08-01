@@ -98,7 +98,36 @@
     - *LAG*나 *LEAD*는 현재 행을 기준으로 앞 또는 뒤의 n순위 값을 추출하는 fn<br/>
     *(LAG(product_id, 2) OVER(ORDER BY score DESC) AS lag_2)*
     - *FIRST_VALUE(), LAST_VALUE()*: *OVER(ORDER BY -)*로 정의된 목록 중 첫번째 혹은 마지막 해당 value 도출
-    - 
+    - 윈도 함수의 프레임 지정 구문: *FIRST_VALUE(product_id)<br/>
+    OVER(ORDER BY score DESC<br/>
+    ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)*<br/>
+    - 범위 내부의 대상을 집약하는 *array_agg*(HIVE, SparkSQL: *collect_list*)
+    - 각 카테고리 상위 n개 추출: SQL 사양으로 인해 윈도 함수를 where 구문 안에 작성할 수 없으므로, <br/>
+    SELECT 구문에서 윈도 함수를 사용한 결과를 서브쿼리로 만들고 외부에서 where 구문 적용해야.
+    > SELECT<br/>
+    category<br/>
+    , product_id<br/>
+    , score<br/>
+    , ROW_NUMBER()<br/>
+    OVER(PARTITION BY category ORDER BY score DESC) AS rank<br/>
+    FROM<br/>
+    popular_products<br/>
+    WHERE<br/>
+    rank < 4<br/>
+    ; -- ERROR:  column "rank" does not exist
+    > SELECT *<br/>
+    FROM<br/>
+    (SELECT<br/>
+    category<br/>
+    , product_id<br/>
+    , score<br/>
+    , ROW_NUMBER()<br/>
+    OVER(PARTITION BY category ORDER BY score DESC) AS rank<br/>
+    FROM<br/>
+    popular_products) AS p_p_with_rank<br/>
+    WHERE<br/>
+    rank < 4<br/>
+    ; -- 외부 쿼리에서 순위 활용해 압축하기<br/>
     
     
     
