@@ -115,6 +115,7 @@
     WHERE<br/>
     rank < 4<br/>
     ; -- ERROR:  column "rank" does not exist
+    <br/>
     > SELECT *<br/>
     FROM<br/>
     (SELECT<br/>
