@@ -75,6 +75,11 @@
     -- 날짜 간 차이 계산은 date_diff()<br/>
     - CAST( - AS text(or integer...) / substring( - , 1, 10) / replace( - , '-', '') <br/>
     HIVE, SparkSQL: replace를 regexp_replace, text를 string으로.
+6. 6. IP 주소 다루기
+    - PostgreSQL에는 IP 주소를 다루기 위한 'inet' 자료형 구현<br/>
+    address/y 형식의 네트워크 범위에 IP 주소가 포함되는지 << or >>로 판정 가능
+    - 혹은 IP주소를 *CAST*를 통해 text로 변환 후, *split_part*를 통해 원하는 부분을 골라낸다.
+    - 
     
     
     
