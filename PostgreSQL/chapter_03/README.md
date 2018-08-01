@@ -83,6 +83,7 @@
     
 ### 하나의 테이블에 대한 조작
 - 수많은 수집 데이터를 집약하고 가공하는 방법
+- **윈도 함수란?**: 테이블 내부에 '윈도'라고 부르는 범위를 정의하고, 해당 범위 내부에 포함된 값을 특정 레코드에서 자유롭게 사용 가능케 하는 fn
 7. 1. 그룹의 특징 찾기 (7-1)
     - *COUNT(DISTINCT user_id)* 활용 시 중복제거
     - 그룹핑*GROUP BY*. 규봉: column에 그룹핑 대상을 추가해주면 보기 편하다.
@@ -90,8 +91,11 @@
     (한명의 유져들로 구성된 row마다. 즉, AVG(score) 단독일 때 필요한 aggregation 불필요)
     *OVER()*: 전체 / *OVER(PARTITION BY user_id)* 
 7. 2. 그룹 내부의 순서 (7-2)
-    
-    
+    - 상품 평점 뿐만 아니라, 특정 국가 내 지출액 or 접속시간이 가장 긴 유져들을 내림차순 정렬할 때 활용 가능<br/>
+    *(ROW_NUMBER() OVER(ORDER BY score DESC) AS row*<br/>
+    - *LAG*나 *LEAD*는 현재 행을 기준으로 앞 또는 뒤의 n순위 값을 추출하는 fn<br/>
+    *(LAG(product_id, 2) OVER(ORDER BY score DESC) AS lag_2)*
+    - 
     
     
     
