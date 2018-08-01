@@ -91,5 +91,5 @@ SELECT
   , CAST(split_part(ip, '.', 1) AS integer) AS ip_part_1
 FROM
   (SELECT CAST('192.168.0.1' AS text) AS ip) AS t
-  -- 여기서 왜 t로 묶는 것인가?
+  -- 여기서 왜 t로 묶는 것인가? -> 규봉: syntax 특성이다.
 ;
