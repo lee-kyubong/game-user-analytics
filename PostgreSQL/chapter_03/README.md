@@ -104,7 +104,7 @@
     - 범위 내부의 대상을 집약하는 *array_agg*(HIVE, SparkSQL: *collect_list*)
     - 각 카테고리 상위 n개 추출: SQL 사양으로 인해 윈도 함수를 where 구문 안에 작성할 수 없으므로, <br/>
     SELECT 구문에서 윈도 함수를 사용한 결과를 서브쿼리로 만들고 외부에서 where 구문 적용해야.
-    > SELECT<br/>
+    - > SELECT<br/>
     category<br/>
     , product_id<br/>
     , score<br/>
@@ -115,8 +115,7 @@
     WHERE<br/>
     rank < 4<br/>
     ; -- ERROR:  column "rank" does not exist
-    <br/>
-    > SELECT *<br/>
+    - >SELECT *<br/>
     FROM<br/>
     (SELECT<br/>
     category<br/>
