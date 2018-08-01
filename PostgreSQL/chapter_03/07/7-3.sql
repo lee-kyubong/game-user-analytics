@@ -15,6 +15,20 @@ VALUES
   , ('2017-01-02', 'users'      ,  250)
 ;
 
+-- 행을 열로 표현하기
+
+SELECT
+  dt
+  , MAX(CASE WHEN indicator = 'impressions' THEN val END) AS imp
+  , MAX(CASE WHEN indicator = 'sessions' THEN val END) AS sess
+  , MAX(CASE WHEN indicator = 'users' THEN val END) AS users
+FROM
+  daily_kpi
+GROUP BY dt
+ORDER BY dt
+;
+
+
 DROP TABLE IF EXISTS purchase_detail_log;
 CREATE TABLE purchase_detail_log (
     purchase_id integer
@@ -30,4 +44,14 @@ VALUES
   , (100002, 'D001', 5000)
   , (100002, 'D002', 3000)
   , (100003, 'A001', 3000)
+;
+
+-- 열의 종류와 수가 가변적이라면?
+SELECT
+  purchase_id
+  , string_agg(product_id, ',') AS product_id
+  , SUM(price) AS sum
+FROM purchase_detail_log
+GROUP BY purchase_id
+ORDER BY purchase_id
 ;
