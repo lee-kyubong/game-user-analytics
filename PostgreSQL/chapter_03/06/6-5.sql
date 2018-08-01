@@ -75,3 +75,21 @@ SELECT
 FROM
   mst_users_with_birthday
 ;
+
+-- IP주소 다루기
+SELECT
+  CAST('127.0.0.1' AS inet) < CAST('127.0.0.2' AS inet) AS lt
+  , CAST('127.0.0.1' AS inet) > CAST('192.0.0.1' AS inet) AS gt
+;
+
+SELECT
+  CAST('127.0.0.1' AS inet) << CAST('127.0.0.0/8' AS inet) AS is_contained
+;
+
+SELECT
+  ip
+  , CAST(split_part(ip, '.', 1) AS integer) AS ip_part_1
+FROM
+  (SELECT CAST('192.168.0.1' AS text) AS ip) AS t
+  -- 여기서 왜 t로 묶는 것인가?
+;
