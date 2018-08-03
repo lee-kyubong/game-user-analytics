@@ -146,6 +146,14 @@
     그러한 데이터 수와 같은 수의 '일련번호'를 가진 피벗 테이블 생성 후 CROSS JOIN하면 된다.<br/>
     *ex) SELECT 1 AS idx UNION ALL SELECT 2 AS idx*
     
+### 여러 개의 테이블 조작하기
+8. 1. 여러 개의 테이블을 세로로 결합하기
+    - *UNION ALL*: 비슷한 구조를 가진 복수의 테이블을 세로로 결함
+    - >SELECT 'app1' AS app_name, user_id, name, email, NULL AS phone FROM app1_mst_users<br/>
+    UNION ALL<br/>
+        SELECT 'app2' AS app_name, user_id, name, NULL, phone FROM app2_mst_users;
+    - 
+    
 
 
 
