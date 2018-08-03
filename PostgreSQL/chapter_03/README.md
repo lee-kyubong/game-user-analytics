@@ -141,7 +141,18 @@
     ; -- ERROR:  column "daily_kpi.dt" must appear in the GROUP BY clause or be used in an aggregate function
     - 행을 열로 바꿀 때, 열의 종류와 수가 가변적이라면?(ex_한 고객이 한 구매당 하나의 상품이 아닌 여러 개의 상품 구매 가능)<br/>
     *string_agg(product_id, ',') AS product_id*
+7. 4. 가로 기반 데이터를 세로 기반으로 변환하기 (7-4)
+    - 칼럼으로 표현된 가로기반 데이터는 데이터의 수가 고정되어 있는 특징. 행으로 전개할 데이터 수가 고정되었다면, <br/>
+    그러한 데이터 수와 같은 수의 '일련번호'를 가진 피벗 테이블 생성 후 CROSS JOIN하면 된다.<br/>
+    *ex) SELECT 1 AS idx UNION ALL SELECT 2 AS idx*
     
+
+
+
+
+
+
+
     
     
     
