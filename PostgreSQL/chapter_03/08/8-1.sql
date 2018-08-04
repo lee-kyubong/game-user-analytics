@@ -23,3 +23,10 @@ VALUES
     ('U001', 'Ito'   , '080-xxxx-xxxx')
   , ('U002', 'Tanaka', '070-xxxx-xxxx')
 ;
+
+
+
+  SELECT 'app1' AS app_name, user_id, name, email, NULL AS phone FROM app1_mst_users
+UNION ALL
+  SELECT 'app2' AS app_name, user_id, name, NULL, phone FROM app2_mst_users
+;
