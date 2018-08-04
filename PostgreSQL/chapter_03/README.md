@@ -159,7 +159,8 @@ select * from mst_categories LEFT(or RIGHT) JOIN category_sales USING (category_
     UNION ALL<br/>
           SELECT 'app2' AS app_name, user_id, name, NULL, phone FROM app2_mst_users;
 8. 2. 여러 개의 테이블을 가로로 정렬하기 (8-2)
-    - 
+    -  **규봉:WHERE r.rank = 1 VS AND r.rank = 1 -- 판매실적이 없는 3번을 미포함, 포함 why?**
+    - ORDER BY sales DESC LIMIT 1 활용하려면 상관 서브쿼리로.
     
 
 
