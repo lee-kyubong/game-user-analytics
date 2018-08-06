@@ -164,6 +164,39 @@ select * from mst_categories LEFT(or RIGHT) JOIN category_sales USING (category_
     - (SELECT r.product_id FROM product_sale_ranking as r<br/>
     WHERE m.category_id = r.category_id<br/>
     ORDER BY sales DESC LIMIT 1)처럼, SELECT절이나 어디에도 사용되지 않는 'sales' 컬럼으로 정렬 가능
+8. 3. 조건 플래그를 0과 1로 표현하기
+    - *LEFT JOIN* 후 id로 *GROUP BY*를 활용하면, 사용자 마스터의 레코드 수를 그대로 유지한 채<br/>
+    구매 로그 기록(한 id가 복수의 행 가질 수 있음)을 결합할 수 있다.
+    - 조건 플래그 0, 1 변환
+    - *SIGN(COUNT(p.user_id)) AS purchased_log*: 0이라면 '0', 1 이상이면 '1'
+    - *CASE WHEN m.card_number IS NOT NULL THEN 1 ELSE 0 END AS using_card*
+    - *COUNT(p.user_id) AS purchase_count*
+    - **규봉: 기준이 되는 master table의 칼럼들을 *GROUP BY*로 지정해야 한다!<br/>
+    *GROUP BY  m.user_id, m.card_number***
+8. 4. 계산한 테이블에 이름 붙여 재사용하기
+- >select <br/>
+    category_name<br/>
+    , product_id<br/>
+    , sales<br/>
+    , ROW_NUMBER() OVER(PARTITION BY category_name ORDER BY sales DESC) AS row<br/>
+    FROM<br/>
+    product_sales; -- 이런 방식으로 '카테고리'별로 판매액 순으로 정렬은 가능하나, *where row = 1*은 바로 적용 불가!<br/>
+    -- SQL 사양으로 인해 윈도 함수를 where 구문에 작성할 수 없으므로, <br/>
+    -- SELECT 구문에서 윈도 함수를 사용한 결과를 **\'서브 쿼리\'**로 만들고 **\'외부\'**에서 where  구문 적용해야!<br/>
+    SELECT<br/>
+        *<br/>
+    FROM<br/>
+        (select<br/>
+            category_name<br/>
+            , product_id<br/>
+            , sales<br/>
+            , ROW_NUMBER() OVER(PARTITION BY category_name ORDER BY sales DESC) AS row<br/>
+        FROM<br/>
+            product_sales) AS test<br/>
+            where row = 1;<br/>
+        -- 104, 97p. 한 테이블 그룹 내부의 순서를 적용하려면 '윈도' 함수 반드시 필요
+    
+
     
 
 
