@@ -161,6 +161,9 @@ select * from mst_categories LEFT(or RIGHT) JOIN category_sales USING (category_
 8. 2. 여러 개의 테이블을 가로로 정렬하기 (8-2)
     -  **규봉:WHERE r.rank = 1 VS AND r.rank = 1 -- 판매실적이 없는 3번을 미포함, 포함 why?**
     - ORDER BY sales DESC LIMIT 1 활용하려면 상관 서브쿼리로.
+    - (SELECT r.product_id FROM product_sale_ranking as r<br/>
+    WHERE m.category_id = r.category_id<br/>
+    ORDER BY sales DESC LIMIT 1)처럼, SELECT절이나 어디에도 사용되지 않는 'sales' 컬럼으로 정렬 가능
     
 
 
