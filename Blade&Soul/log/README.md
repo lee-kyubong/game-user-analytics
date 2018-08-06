@@ -2,7 +2,7 @@
 
 ## 2018 Big Centest @kookoowaa, @yeongrongbak, @lee-kyubong
 
-### 080218 @판교 w/ CP, YP, KL
+### 080218 @광교 w/ CP, YP, KL
 - 라벨링 결과가 25,000씩 균등하게 이루어져 있다.
 - 데이터 파일들이 커 (party 등 2GB 넘는 csv들) 사양 좋은 인프라 필요
 - 도메인 파악 위해 게임 직접 플레이 필요. 최소 홈페이지 소개 완전 숙지. 
