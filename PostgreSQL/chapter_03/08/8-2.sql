@@ -60,19 +60,20 @@ FROM
 ;
 
 -- 상관 서브쿼리
-
 SELECT
   m.category_id
   , m.name
   , (SELECT c.sales FROM category_sales as c
   WHERE m.category_id = c.category_id)
-  , (SELECT r.rank FROM product_sale_ranking as r
-  WHERE m.category_id = r.category_id)
+  , (SELECT r.product_id FROM product_sale_ranking as r
+  WHERE m.category_id = r.category_id
+  ORDER BY sales DESC LIMIT 1) AS top_sale_product
 FROM
   mst_categories AS m
 ;
 
 
+-- 연습
 -- 카테고리 마스터 테이블이 있는데,
 -- 이 카테고리별 총 매출액이 얼마이고,
 -- 판매 매출 순위가 1위인 상품의 세부 id와 그 가격은 얼마인가를 JOIN으로.
@@ -80,7 +81,7 @@ SELECT
   m.category_id
   , m.name
   , s.sales AS total_sales
-  , r.rank
+  , r.rank -- 규봉: 2차 left join절에 지정된 alias 활용 가능!
   , r.product_id
   , r.sales AS detail_sales
 FROM
