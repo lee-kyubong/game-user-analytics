@@ -27,3 +27,21 @@ VALUES
   , (10004, 'U002', 800, '2017-03-01 10:00:00')
   , (10005, 'U002', 400, '2017-03-02 10:00:00')
 ;
+
+
+
+SELECT
+  m.user_id
+  , m.card_number
+  , COUNT(p.user_id) AS purchase_count
+  , CASE WHEN m.card_number IS NOT NULL THEN 1 ELSE 0 END AS using_card
+  , SIGN(COUNT(p.user_id)) AS purchased_0_1
+FROM
+  mst_users_with_card_number AS m
+  LEFT JOIN
+    purchase_log AS p
+    ON
+      m.user_id = p.user_id
+  GROUP BY  m.user_id, m.card_number -- 중요한 부분!
+
+;
