@@ -1,6 +1,6 @@
 # Blade & Soul (NCsoft)
 
-## 2018 Big Centest @kookoowaa, @yeongrongbak, @lee-kyubong
+## 2018 Big Centest @kookoowaa, @yeongrongbak, @boram_jng, @lee-kyubong
 
 ### 080218 @광교 w/ CP, YP, KL
 - 라벨링 결과가 25,000씩 균등하게 이루어져 있다.
@@ -17,5 +17,7 @@
 - 지난 회의 때 고민한 마스터 테이블 형태는 'activity의 모든 기록에 라벨링을 병합하는 형태'로 합의
 - label, activity, party 데이터를 더 살펴보며 특징 파악 지속
 - Python을 기반으로 협업 인프라 구축 완료
-- 다음 이야기 시간에 ...
+
+### 080618 @카카오톡 w/ CP, YP, KL, BJ
+- BJ has joined a party (completed colab invitaion)
 
