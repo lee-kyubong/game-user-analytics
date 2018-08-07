@@ -164,7 +164,7 @@ select * from mst_categories LEFT(or RIGHT) JOIN category_sales USING (category_
     - (SELECT r.product_id FROM product_sale_ranking as r<br/>
     WHERE m.category_id = r.category_id<br/>
     ORDER BY sales DESC LIMIT 1)처럼, SELECT절이나 어디에도 사용되지 않는 'sales' 컬럼으로 정렬 가능
-8. 3. 조건 플래그를 0과 1로 표현하기
+8. 3. 조건 플래그를 0과 1로 표현하기 (8-3)
     - *LEFT JOIN* 후 id로 *GROUP BY*를 활용하면, 사용자 마스터의 레코드 수를 그대로 유지한 채<br/>
     구매 로그 기록(한 id가 복수의 행 가질 수 있음)을 결합할 수 있다.
     - 조건 플래그 0, 1 변환
@@ -173,7 +173,7 @@ select * from mst_categories LEFT(or RIGHT) JOIN category_sales USING (category_
     - *COUNT(p.user_id) AS purchase_count*
     - **규봉: 기준이 되는 master table의 칼럼들을 *GROUP BY*로 지정해야 한다!<br/>
     *GROUP BY  m.user_id, m.card_number***
-8. 4. 계산한 테이블에 이름 붙여 재사용하기
+8. 4. 계산한 테이블에 이름 붙여 재사용하기 (8-4)
 - >select <br/>
     category_name<br/>
     , product_id<br/>
@@ -192,19 +192,28 @@ select * from mst_categories LEFT(or RIGHT) JOIN category_sales USING (category_
             , sales<br/>
             , ROW_NUMBER() OVER(PARTITION BY category_name ORDER BY sales DESC) AS row<br/>
         FROM<br/>
-            product_sales) AS test<br/>
+            product_sales) AS test<br/> -- 서브쿼리에 alias 지정 필요. SYNTAX이므로 암기해야!
             where row = 1;<br/>
         -- 104, 97p. 한 테이블 그룹 내부의 순서를 적용하려면 '윈도' 함수 반드시 필요
-    
-
-    
-
-
-
-
-
-
-
-    
-    
-    
+        
+- 서브쿼리의 중첩은 가독성을 저하시킴. Common Table Expression을 이용해 해결
+- CTE는 일시적인 테이블을 만들어 여러번 재사용 가능. 매우 많이 사용되는 테이블은 아예 물리 테이블화 권장
+- 사용자에 따라 테이블 생성 권한이 없기에 *WITH* 구문 통한 유사 테이블을 일시적으로 생성
+- >  WITH <br/>
+mst_devices AS (<br/>
+SELECT 1 AS device_id, 'PC' AS device_name<br/>
+UNION ALL SELECT 2 AS device_id, 'PHONE' AS device_name<br/>
+UNION ALL SELECT 3 AS device_id, 'app' AS device_name<br/>
+)<br/>
+SELECT<br/>
+u.user_id<br/>
+, d.device_name<br/>
+FROM<br/>
+mst_users AS u<br/>
+LEFT JOIN<br/>
+mst_devices AS d<br/>
+ON u.register_device = d.device_id<br/>
+; -- 이런식으로 기존에 존재하지 않던 mst_devices 테이블을 임시로 생성 후, 기존의 mst_users와 병합
+- 순번 생성<br/>
+a. Postgres: *generate_series(1, 5)*
+b. HIVE, SparkSQL: *explode(split(repear('x', 5-1), 'x'))*
