@@ -21,3 +21,5 @@
 ### 080618 @카카오톡 w/ CP, YP, KL, BJ
 - BJ has joined a party (completed colab invitaion)
 
+### 080818
+- guild와 라벨 그룹별 분포 탐색
