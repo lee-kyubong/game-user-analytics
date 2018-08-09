@@ -47,3 +47,40 @@ FROM
 GROUP BY dt
 ORDER BY dt
 ;
+
+
+-- 이전 6일 기록과 함께 이동평균 구하기
+SELECT
+  dt
+  , SUM(purchase_amount) AS total_amount
+
+  , AVG(SUM(purchase_amount))
+    OVER(ORDER BY dt ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)
+    AS seven_day_avg
+
+  , CASE
+    WHEN
+      COUNT(*) OVER(ORDER BY dt ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) = 7
+    THEN
+      AVG(SUM(purchase_amount))
+      OVER(ORDER BY dt ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)
+  END
+  AS seven_day_avg_strict
+FROM purchase_log
+GROUP BY dt
+ORDER BY dt
+;
+
+-- 날짜별 매출과 당월 누계 매출 집계 쿼리
+ SELECT
+  dt
+  , substr(dt, 1, 7) AS YM
+  , SUM(purchase_amount) AS total_amount
+  , SUM(SUM(purchase_amount))
+    OVER(PARTITION BY substr(dt, 1, 7) ORDER BY dt ROWS UNBOUNDED PRECEDING)
+  AS agg_amount
+FROM
+  purchase_log
+GROUP BY dt
+ORDER BY dt
+;
