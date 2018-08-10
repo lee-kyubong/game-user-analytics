@@ -84,3 +84,23 @@ FROM
 GROUP BY dt
 ORDER BY dt
 ;
+
+-- WITH 구문으로 반복해서 나오는 구문을 외부로 꺼내 재활용 가능케 하기
+WITH
+daily_purchase AS (
+  SELECT
+    dt
+    -- 연, 월, 일 각각 추출
+    , substr(dt, 1, 4) AS year
+    , substr(dt, 6, 2) AS month
+    , substr(dt, 9, 2) AS date
+    , SUM(purchase_amount) AS purchase_amount
+  FROM purchase_log
+  GROUP BY dt
+)
+SELECT
+  *
+FROM
+  daily_purchase
+ORDER BY dt
+;
