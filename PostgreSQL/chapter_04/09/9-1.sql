@@ -104,3 +104,27 @@ FROM
   daily_purchase
 ORDER BY dt
 ;
+
+-- 앞서 생성한 WITH 구문 활용법
+WITH
+daily_purchase AS (
+  SELECT
+    dt
+    -- 연, 월, 일 각각 추출
+    , substr(dt, 1, 4) AS year
+    , substr(dt, 6, 2) AS month
+    , substr(dt, 9, 2) AS date
+    , SUM(purchase_amount) AS purchase_amount
+  FROM purchase_log
+  GROUP BY dt
+)
+SELECT
+  dt
+  , CONCAT(year, '-', month) AS year_month -- WITH 구문에서 만든 컬럼 사용
+  , purchase_amount -- WITH 구문에서 만든 컬럼 사용
+  , SUM(purchase_amount)
+    OVER(PARTITION BY month ORDER BY dt ROWS UNBOUNDED PRECEDING)
+  AS agg_amount
+FROM daily_purchase
+ORDER BY dt
+;
