@@ -128,30 +128,3 @@ SELECT
 FROM daily_purchase
 ORDER BY dt
 ;
-
-
-WITH
-daily_purchase AS (
-  SELECT
-    dt
-    -- 연, 월, 일 각각 추출
-    , substr(dt, 1, 4) AS year
-    , substr(dt, 6, 2) AS month
-    , substr(dt, 9, 2) AS date
-    , SUM(purchase_amount) AS purchase_amount
-  FROM purchase_log
-  GROUP BY dt
-)
-SELECT
-  month
-  , SUM(CASE year WHEN '2014' THEN purchase_amount END) AS amount_2014
-  , SUM(CASE year WHEN '2015' THEN purchase_amount END) AS amount_2015
-  , 100.0
-    * SUM(CASE year WHEN '2015' THEN purchase_amount END)
-    / SUM(CASE year WHEN '2014' THEN purchase_amount END)
-    AS rate
-  FROM
-    daily_purchase
-  GROUP BY month
-  ORDER BY month
-  ;
