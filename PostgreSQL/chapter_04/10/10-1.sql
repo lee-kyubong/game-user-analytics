@@ -22,3 +22,41 @@ VALUES
   , ('2015-12-10', 625, 'U009', 'D009', 6000, 'food'         , 'fish'       )
   , ('2015-12-11', 700, 'U010', 'D010', 2000, 'supplement'   , 'protain'    )
 ;
+
+WITH
+sub_category_amount AS (
+  -- 소 카테고리
+  SELECT
+    category AS micro_category
+    , sub_category
+    , SUM(price) as amount
+  FROM
+    purchase_detail_log
+  GROUP BY
+    category, sub_category
+)
+, category_amount AS (
+  -- 대 카테고리
+  SELECT
+    category
+    , 'all' as sub_category
+    , SUM(price) AS amount
+  FROM
+    purchase_detail_log
+  GROUP BY
+    category
+)
+, total_amount AS (
+  -- 전체
+  SELECT
+    'all' AS category
+    , 'all' AS sub_category
+    , SUM(price) AS amount
+  FROM
+    purchase_detail_log
+)
+          -- UNION ALL을 했기에 가장 선두의 select 컬럼명을 따른다. (micro_category)
+          SELECT micro_category, sub_category, amount FROM sub_category_amount
+UNION ALL SELECT category, sub_category, amount FROM category_amount
+UNION ALL SELECT category, sub_category, amount FROM total_amount
+;
