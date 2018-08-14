@@ -60,3 +60,15 @@ sub_category_amount AS (
 UNION ALL SELECT category, sub_category, amount FROM category_amount
 UNION ALL SELECT category, sub_category, amount FROM total_amount
 ;
+
+-- ROLLUP
+SELECT
+  COALESCE(category, 'all') as category
+  , COALESCE(sub_category, 'all') AS sub_category
+  , SUM(price) AS amount
+FROM
+  purchase_detail_log
+GROUP BY
+  ROLLUP(category, sub_category)
+  -- in Hive: category, sub_category WITH ROLLUP
+;
