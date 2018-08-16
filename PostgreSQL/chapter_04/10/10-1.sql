@@ -72,3 +72,43 @@ GROUP BY
   ROLLUP(category, sub_category)
   -- in Hive: category, sub_category WITH ROLLUP
 ;
+
+-- 비율을 구간화시켜 등급화
+WITH
+monthly_sales AS(
+  SELECT
+    category -- 여기서 카테고리1은 나타난 적이 없는 변수...
+    , SUM(price) AS amount
+  FROM
+    purchase_detail_log
+  -- 대상 1개월 제한
+  WHERE
+    dt BETWEEN '2015-12-01' AND '2015-12-31'
+  GROUP BY
+    category
+)
+, sales_composition_ratio AS (
+  SELECT
+    category
+    , amount
+    -- 카테고리별 전체매출 대비 비율
+    , 100 * amount / SUM(amount) OVER() AS composition_ratio
+
+    -- 누계_카테고리별 전체매출 대비 비율
+    , 100 * SUM(amount) OVER(ORDER BY amount DESC)
+    / SUM(amount) OVER() AS cumulative_ratio
+  FROM
+    monthly_sales
+)
+  SELECT
+    *
+  , CASE
+      WHEN cumulative_ratio BETWEEN 0 AND 70 THEN 'A'
+      WHEN cumulative_ratio BETWEEN 70 AND 90 THEN 'B'
+      WHEN cumulative_ratio BETWEEN 90 AND 100 THEN 'C'
+    END AS abc_rank
+  FROM
+    sales_composition_ratio
+  ORDER BY
+    amount DESC
+  ;
