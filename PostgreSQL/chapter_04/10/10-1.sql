@@ -33,13 +33,13 @@ sub_category_amount AS (
   FROM
     purchase_detail_log
   GROUP BY
-    category, sub_category
+    category, sub_category -- group by에 대항목 소항목 둘다 지정하며 소항목 소계
 )
 , category_amount AS (
   -- 대 카테고리
   SELECT
     category
-    , 'all' as sub_category
+    , 'all' as sub_category -- 대항목 소계 합을 위해 'all' 생성
     , SUM(price) AS amount
   FROM
     purchase_detail_log
@@ -53,10 +53,10 @@ sub_category_amount AS (
     , 'all' AS sub_category
     , SUM(price) AS amount
   FROM
-    purchase_detail_log
+    purchase_detail_log -- group by할 필요가 없다. 전체에 대한 합이므로.
 )
-          -- UNION ALL을 했기에 가장 선두의 select 컬럼명을 따른다. (micro_category)
-          SELECT micro_category, sub_category, amount FROM sub_category_amount
+          -- UNION ALL을 했기에 가장 선두의 select 컬럼명을 따른다. (category)
+          SELECT category, sub_category, amount FROM sub_category_amount
 UNION ALL SELECT category, sub_category, amount FROM category_amount
 UNION ALL SELECT category, sub_category, amount FROM total_amount
 ;
@@ -73,11 +73,12 @@ GROUP BY
   -- in Hive: category, sub_category WITH ROLLUP
 ;
 
+
 -- 비율을 구간화시켜 등급화
 WITH
 monthly_sales AS(
   SELECT
-    category -- 여기서 카테고리1은 나타난 적이 없는 변수...
+    category
     , SUM(price) AS amount
   FROM
     purchase_detail_log
@@ -90,10 +91,9 @@ monthly_sales AS(
 , sales_composition_ratio AS (
   SELECT
     category
-    , amount
+    , amount -- 위의 monthly_sales에서 생성됨.앞서 만든 이유는 가공을 위해.
     -- 카테고리별 전체매출 대비 비율
     , 100 * amount / SUM(amount) OVER() AS composition_ratio
-
     -- 누계_카테고리별 전체매출 대비 비율
     , 100 * SUM(amount) OVER(ORDER BY amount DESC)
     / SUM(amount) OVER() AS cumulative_ratio
