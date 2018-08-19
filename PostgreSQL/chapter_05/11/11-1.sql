@@ -129,3 +129,73 @@ SELECT
   GROUP BY
     ROLLUP(action, login_status)
   ;
+
+
+  -- 사용자 생일로 연령 계산
+  WITH
+  mst_users_with_int_birth_date AS (
+    SELECT
+      *
+    , 20180101 AS today
+    -- 현재  birth_date col이 문자열이므로 정수 표현으로 변환
+    , CAST(replace(substring(birth_date, 1, 10), '-', '') AS integer) AS int_birth_date
+    FROM
+      mst_users
+  )
+, mst_users_with_age AS (
+  SELECT
+    *
+    , floor((today - int_birth_date) / 10000) AS age
+  FROM
+    mst_users_with_int_birth_date
+)
+  SELECT
+  user_id, sex, birth_date, age
+  FROM
+    mst_users_with_age
+;
+
+
+-- 연령과 성별 구분기호 생성
+WITH
+mst_users_with_int_birth_date AS (
+  SELECT
+    *
+  , 20180101 AS today
+  -- 현재  birth_date col이 문자열이므로 정수 표현으로 변환
+  , CAST(replace(substring(birth_date, 1, 10), '-', '') AS integer) AS int_birth_date
+  FROM
+    mst_users
+)
+, mst_users_with_age AS (
+SELECT
+  *
+  , floor((today - int_birth_date) / 10000) AS age
+FROM
+  mst_users_with_int_birth_date
+)
+, mst_users_with_category AS (
+  SELECT
+    user_id
+    , sex
+    , age
+    , CONCAT(
+        CASE
+          WHEN 20 <= age THEN sex
+          ELSE ''
+        END
+      , CASE
+          WHEN age BETWEEN 4 AND 12 THEN 'C'
+          WHEN age BETWEEN 13 AND 19 THEN 'T'
+          WHEN age BETWEEN 20 AND 34 THEN '1'
+          WHEN age BETWEEN 35 AND 49 THEN '2'
+          WHEN age >= 50 THEN '3'
+        END
+    ) AS category
+  FROM
+    mst_users_with_age
+)
+SELECT *
+FROM
+  mst_users_with_category
+;
