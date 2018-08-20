@@ -38,31 +38,31 @@ VALUES
     ('989004ea', 'U001', 'purchase', 'drama' , 'D001,D002', 2000, '2016-11-03 18:10:00')
   , ('989004ea', 'U001', 'view'    , NULL    , NULL       , NULL, '2016-11-03 18:00:00')
   , ('989004ea', 'U001', 'favorite', 'drama' , 'D001'     , NULL, '2016-11-03 18:00:00')
-  , ('989004ea', 'U001', 'review'  , 'drama' , 'D001'     , NULL, '2016-11-03 18:00:00')
+  , ('989004ea', 'U001', 'purchase'  , 'drama' , 'D001'     , NULL, '2016-11-03 18:00:00')
+  , ('989004ea', 'U001', 'purchase', 'drama' , 'D001'     , NULL, '2016-11-01 18:00:00')
   , ('989004ea', 'U001', 'add_cart', 'drama' , 'D001'     , NULL, '2016-11-03 18:00:00')
-  , ('989004ea', 'U001', 'add_cart', 'drama' , 'D001'     , NULL, '2016-11-03 18:00:00')
-  , ('989004ea', 'U001', 'add_cart', 'drama' , 'D001'     , NULL, '2016-11-03 18:00:00')
-  , ('989004ea', 'U001', 'add_cart', 'drama' , 'D001'     , NULL, '2016-11-03 18:00:00')
-  , ('989004ea', 'U001', 'add_cart', 'drama' , 'D001'     , NULL, '2016-11-03 18:00:00')
-  , ('989004ea', 'U001', 'add_cart', 'drama' , 'D002'     , NULL, '2016-11-03 18:01:00')
-  , ('989004ea', 'U001', 'add_cart', 'drama' , 'D001,D002', NULL, '2016-11-03 18:02:00')
-  , ('989004ea', 'U001', 'purchase', 'drama' , 'D001,D002', 2000, '2016-11-03 18:10:00')
-  , ('47db0370', 'U002', 'add_cart', 'drama' , 'D001'     , NULL, '2016-11-03 19:00:00')
+  , ('989004ea', 'U001', 'add_cart', 'drama' , 'D001'     , NULL, '2016-11-01 18:00:00')
+  , ('989004ea', 'U005', 'add_cart', 'drama' , 'D001'     , NULL, '2016-11-03 18:00:00')
+  , ('989004ea', 'U006', 'add_cart', 'drama' , 'D001'     , NULL, '2016-11-03 18:00:00')
+  , ('989004ea', 'U007', 'add_cart', 'drama' , 'D002'     , NULL, '2016-11-01 18:01:00')
+  , ('989004ea', 'U007', 'purchase', 'drama' , 'D001,D002', NULL, '2016-11-03 18:02:00')
+  , ('989004ea', 'U007', 'purchase', 'drama' , 'D001,D002', 2000, '2016-11-07 18:10:00')
+  , ('47db0370', 'U007', 'add_cart', 'drama' , 'D001'     , NULL, '2016-11-01 19:00:00')
   , ('47db0370', 'U002', 'purchase', 'drama' , 'D001'     , 1000, '2016-11-03 20:00:00')
   , ('47db0370', 'U002', 'add_cart', 'drama' , 'D002'     , NULL, '2016-11-03 20:30:00')
-  , ('87b5725f', 'U001', 'add_cart', 'action', 'A004'     , NULL, '2016-11-04 12:00:00')
-  , ('87b5725f', 'U001', 'add_cart', 'action', 'A005'     , NULL, '2016-11-04 12:00:00')
+  , ('87b5725f', 'U007', 'add_cart', 'action', 'A004'     , NULL, '2016-11-04 12:00:00')
+  , ('87b5725f', 'U007', 'purchase', 'action', 'A005'     , NULL, '2016-11-04 12:00:00')
   , ('87b5725f', 'U001', 'add_cart', 'action', 'A006'     , NULL, '2016-11-04 12:00:00')
   , ('9afaf87c', 'U002', 'purchase', 'drama' , 'D002'     , 1000, '2016-11-04 13:00:00')
   , ('9afaf87c', 'U001', 'purchase', 'action', 'A005,A006', 1000, '2016-11-04 15:00:00')
-  , ('47db0370', NULL, 'add_cart', 'drama' , 'D001'     , NULL, '2016-11-04 19:04:00')
-  , ('47db0370', NULL, 'purchase', 'drama' , 'D001'     , 1000, '2016-11-05 20:03:00')
-  , ('47db0370', NULL, 'add_cart', 'drama' , 'D002'     , NULL, '2016-11-06 20:32:00')
-  , ('87b5725f', NULL, 'add_cart', 'action', 'A004'     , NULL, '2016-11-07 12:50:00')
-  , ('87b5725f', NULL, 'add_cart', 'action', 'A005'     , NULL, '2016-11-08 12:40:00')
-  , ('87b5725f', NULL, 'add_cart', 'action', 'A006'     , NULL, '2016-11-09 12:30:00')
-  , ('9afaf87c', NULL, 'purchase', 'drama' , 'D002'     , 1000, '2016-11-14 13:20:00')
-  , ('9afaf87c', NULL, 'purchase', 'action', 'A005,A006', 1000, '2016-11-24 15:10:00')
+  , ('47db0370', 'U008', 'purchase', 'drama' , 'D001'     , NULL, '2016-11-04 19:04:00')
+  , ('47db0370', 'U009', 'purchase', 'drama' , 'D001'     , 1000, '2016-11-05 20:03:00')
+  , ('47db0370', 'U008', 'add_cart', 'drama' , 'D002'     , NULL, '2016-11-04 20:32:00')
+  , ('87b5725f', 'U009', 'purchase', 'action', 'A004'     , NULL, '2016-11-03 12:50:00')
+  , ('87b5725f', 'U009', 'add_cart', 'action', 'A005'     , NULL, '2016-11-02 12:40:00')
+  , ('87b5725f', 'U000', 'purchase', 'action', 'A006'     , NULL, '2016-11-01 12:30:00')
+  , ('9afaf87c', 'U000', 'purchase', 'drama' , 'D002'     , 1000, '2016-11-01 13:20:00')
+  , ('9afaf87c', 'U000', 'purchase', 'action', 'A005,A006', 1000, '2016-11-01 15:10:00')
 ;
 
 
@@ -198,4 +198,93 @@ FROM
 SELECT *
 FROM
   mst_users_with_category
+;
+
+
+-- 11.3. 연령 구분별 특징 파악
+WITH
+mst_users_with_int_birth_date AS (
+  SELECT
+    *
+  , 20180101 AS today
+  -- 현재  birth_date col이 문자열이므로 정수 표현으로 변환
+  , CAST(replace(substring(birth_date, 1, 10), '-', '') AS integer) AS int_birth_date
+  FROM
+    mst_users
+)
+, mst_users_with_age AS (
+SELECT
+  *
+  , floor((today - int_birth_date) / 10000) AS age
+FROM
+  mst_users_with_int_birth_date
+)
+, mst_users_with_category AS (
+  SELECT
+    user_id
+    , sex
+    , age
+    , CONCAT(
+        CASE
+          WHEN 20 <= age THEN sex
+          ELSE ''
+        END
+      , CASE
+          WHEN age BETWEEN 4 AND 12 THEN 'C'
+          WHEN age BETWEEN 13 AND 19 THEN 'T'
+          WHEN age BETWEEN 20 AND 34 THEN '1'
+          WHEN age BETWEEN 35 AND 49 THEN '2'
+          WHEN age >= 50 THEN '3'
+        END
+    ) AS category
+  FROM
+    mst_users_with_age
+)
+SELECT
+  p.category AS product_category
+  , u.category AS mst_users_with_category
+  , COUNT(*) AS purchase_count_star
+  , COUNT(1) AS purchase_count_1
+FROM
+  action_log AS p
+  JOIN
+    mst_users_with_category AS u
+    ON p.user_id = u.user_id
+WHERE
+  action = 'purchase'
+GROUP BY
+  p.category, u.category
+ORDER BY
+  p.category, u.category
+;
+
+-- 11. 4. 사용자가 한 주간 몇 번 서비스를 사용했는가
+WITH
+action_log_with_dt AS (
+  SELECT *
+  , substring(stamp, 1, 10) AS dt
+  FROM action_log
+)
+, action_day_count_per_user AS (
+  SELECT
+    user_id
+    , COUNT(DISTINCT dt) AS action_day_count
+  FROM
+    action_log_with_dt
+  WHERE
+    dt BETWEEN '2016-11-01' AND '2016-11-07'
+  GROUP BY
+    user_id
+)
+SELECT
+-- 위에서 각 유저들이 일주일동안 몇 번 사용했나를 집계했고,
+-- 아래에서 1부터 7까지에 해당되는 유저들이 몇 명인지 집계
+  action_day_count
+  , COUNT(DISTINCT user_id) AS user_count
+FROM
+  action_day_count_per_user
+GROUP BY
+  action_day_count
+ORDER BY
+  action_day_count
 ;
