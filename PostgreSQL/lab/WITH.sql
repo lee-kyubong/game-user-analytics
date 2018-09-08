@@ -80,3 +80,16 @@ FROM
 ORDER BY
   r ASC -- select 문서 생성한 컬럼 기준으로 정렬 가능하다.
 ;
+
+
+select
+  user_id,
+  action,
+  count(*)
+from
+  action_log
+  group by
+    user_id,
+    action
+  order by user_id
+;
